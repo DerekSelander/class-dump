@@ -27,11 +27,11 @@
 {
     [super willBeginVisiting];
 
-    [self.classDump appendHeaderToString:self.resultString];
+//    [self.classDump appendHeaderToString:self.resultString];
 
-    if (self.classDump.hasObjectiveCRuntimeInfo && self.shouldShowStructureSection) {
-        [self.classDump.typeController appendStructuresToString:self.resultString];
-    }
+//    if (self.classDump.hasObjectiveCRuntimeInfo && self.shouldShowStructureSection) {
+//        [self.classDump.typeController appendStructuresToString:self.resultString];
+//    }
 }
 
 - (void)didEndVisiting;

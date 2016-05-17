@@ -180,8 +180,8 @@
     [classesAndCategories addObjectsFromArray:_classes];
     [classesAndCategories addObjectsFromArray:_categories];
 
-    [visitor willVisitObjectiveCProcessor:self];
-    [visitor visitObjectiveCProcessor:self];
+//    [visitor willVisitObjectiveCProcessor:self];
+//    [visitor visitObjectiveCProcessor:self];
     
     // TODO: Sort protocols by dependency
     // TODO: (2004-01-30) It looks like protocols might be defined in more than one file.  i.e. NSObject.

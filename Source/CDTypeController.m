@@ -97,7 +97,7 @@ static BOOL debug = NO;
 
 - (BOOL)shouldShowMethodAddresses;
 {
-    return self.classDump.shouldShowMethodAddresses;
+    return YES;
 }
 
 - (BOOL)targetArchUses64BitABI;

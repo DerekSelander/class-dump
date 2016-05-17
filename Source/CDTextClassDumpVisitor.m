@@ -40,37 +40,37 @@ static BOOL debug = NO;
 
 - (void)willVisitClass:(CDOCClass *)aClass;
 {
-    if (aClass.isExported == NO)
-        [self.resultString appendString:@"__attribute__((visibility(\"hidden\")))\n"];
+//    if (aClass.isExported == NO)
+//        [self.resultString appendString:@"__attribute__((visibility(\"hidden\")))\n"];
 
-    [self.resultString appendFormat:@"@interface %@", aClass.name];
-    if (aClass.superClassName != nil)
-        [self.resultString appendFormat:@" : %@", aClass.superClassName];
-
-    NSArray *protocols = aClass.protocols;
-    if ([protocols count] > 0) {
-        [self.resultString appendFormat:@" <%@>", aClass.protocolsString];
-    }
-
-    [self.resultString appendString:@"\n"];
+//    [self.resultString appendFormat:@"@interface %@", aClass.name];
+//    if (aClass.superClassName != nil)
+//        [self.resultString appendFormat:@" : %@", aClass.superClassName];
+//
+//    NSArray *protocols = aClass.protocols;
+//    if ([protocols count] > 0) {
+//        [self.resultString appendFormat:@" <%@>", aClass.protocolsString];
+//    }
+//
+//    [self.resultString appendString:@"\n"];
 }
 
 - (void)didVisitClass:(CDOCClass *)aClass;
 {
-    if (aClass.hasMethods)
-        [self.resultString appendString:@"\n"];
+//    if (aClass.hasMethods)
+//        [self.resultString appendString:@"\n"];
 
-    [self.resultString appendString:@"@end\n\n"];
+//    [self.resultString appendString:@"@end\n\n"];
 }
 
 - (void)willVisitIvarsOfClass:(CDOCClass *)aClass;
 {
-    [self.resultString appendString:@"{\n"];
+//    [self.resultString appendString:@"{\n"];
 }
 
 - (void)didVisitIvarsOfClass:(CDOCClass *)aClass;
 {
-    [self.resultString appendString:@"}\n\n"];
+//    [self.resultString appendString:@"}\n\n"];
 }
 
 - (void)willVisitCategory:(CDOCCategory *)category;
@@ -112,21 +112,35 @@ static BOOL debug = NO;
     [self.resultString appendString:@"@end\n\n"];
 }
 
-- (void)visitClassMethod:(CDOCMethod *)method;
+- (void)visitClassMethod:(CDOCMethod *)method className:(NSString *)className;
 {
-    [self.resultString appendString:@"+ "];
+    if (method.address != 0) {
+        if (self.classDump.typeController.targetArchUses64BitABI)
+            [self.resultString appendFormat:@"0x%016lx|", method.address];
+        else
+            [self.resultString appendFormat:@"0x%08lx|", method.address];
+    }
+    [self.resultString appendFormat:@"+[%@ ", className];
     [method appendToString:self.resultString typeController:self.classDump.typeController];
-    [self.resultString appendString:@"\n"];
+    [self.resultString appendString:@"]\n"];
 }
 
-- (void)visitInstanceMethod:(CDOCMethod *)method propertyState:(CDVisitorPropertyState *)propertyState;
+- (void)visitInstanceMethod:(CDOCMethod *)method propertyState:(CDVisitorPropertyState *)propertyState className:(NSString *)className;
 {
     CDOCProperty *property = [propertyState propertyForAccessor:method.name];
     if (property == nil) {
         //NSLog(@"No property for method: %@", method.name);
-        [self.resultString appendString:@"- "];
+        if (method.address != 0) {
+            if (self.classDump.typeController.targetArchUses64BitABI)
+                [self.resultString appendFormat:@"0x%016lx|", method.address];
+            else
+                [self.resultString appendFormat:@"0x%08lx|", method.address];
+        }
+
+        
+        [self.resultString appendFormat:@"-[%@ ", className];
         [method appendToString:self.resultString typeController:self.classDump.typeController];
-        [self.resultString appendString:@"\n"];
+        [self.resultString appendString:@"]\n"];
     } else {
         if ([propertyState hasUsedProperty:property] == NO) {
             //NSLog(@"Emitting property %@ triggered by method %@", property.name, method.name);
@@ -140,8 +154,8 @@ static BOOL debug = NO;
 
 - (void)visitIvar:(CDOCInstanceVariable *)ivar;
 {
-    [ivar appendToString:self.resultString typeController:self.classDump.typeController];
-    [self.resultString appendString:@"\n"];
+//    [ivar appendToString:self.resultString typeController:self.classDump.typeController];
+//    [self.resultString appendString:@"\n"];
 }
 
 - (void)visitProperty:(CDOCProperty *)property;

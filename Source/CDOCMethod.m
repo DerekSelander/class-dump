@@ -82,13 +82,6 @@
     NSString *formattedString = [typeController.methodTypeFormatter formatMethodName:self.name typeString:self.typeString];
     if (formattedString != nil) {
         [resultString appendString:formattedString];
-        [resultString appendString:@";"];
-        if (typeController.shouldShowMethodAddresses && self.address != 0) {
-            if (typeController.targetArchUses64BitABI)
-                [resultString appendFormat:@"\t// IMP=0x%016lx", self.address];
-            else
-                [resultString appendFormat:@"\t// IMP=0x%08lx", self.address];
-        }
     } else
         [resultString appendFormat:@"    // Error parsing type: %@, name: %@", self.typeString, self.name];
 }

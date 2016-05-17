@@ -41,8 +41,8 @@
 - (void)willVisitPropertiesOfCategory:(CDOCCategory *)category;
 - (void)didVisitPropertiesOfCategory:(CDOCCategory *)category;
 
-- (void)visitClassMethod:(CDOCMethod *)method;
-- (void)visitInstanceMethod:(CDOCMethod *)method propertyState:(CDVisitorPropertyState *)propertyState;
+- (void)visitClassMethod:(CDOCMethod *)method className:(NSString *)className;
+- (void)visitInstanceMethod:(CDOCMethod *)method propertyState:(CDVisitorPropertyState *)propertyState className:(NSString *)className;
 - (void)visitIvar:(CDOCInstanceVariable *)ivar;
 - (void)visitProperty:(CDOCProperty *)property;
 

@@ -194,62 +194,65 @@ static BOOL debug = NO;
 
     NSMutableString *resultString = [NSMutableString string];
     {
-        NSUInteger count = [methodTypes count];
-        NSUInteger index = 0;
-        BOOL noMoreTypes = NO;
+//        NSUInteger count = [methodTypes count];
+//        NSUInteger index = 0;
+//        BOOL noMoreTypes = NO;
 
-        CDMethodType *methodType = methodTypes[index];
-        [resultString appendString:@"("];
-        NSString *specialCase = [self _specialCaseVariable:nil type:methodType.type.bareTypeString];
-        if (specialCase != nil) {
-            [resultString appendString:specialCase];
-        } else {
-            NSString *str = [methodType.type formattedString:nil formatter:self level:0];
-            if (str != nil)
-                [resultString appendFormat:@"%@", str];
-        }
-        [resultString appendString:@")"];
+//        CDMethodType *methodType = methodTypes[index];
+//        [resultString appendString:@"("];
+//        NSString *specialCase = [self _specialCaseVariable:nil type:methodType.type.bareTypeString];
+//        if (specialCase != nil) {
+//            [resultString appendString:specialCase];
+//        } else {
+//            NSString *str = [methodType.type formattedString:nil formatter:self level:0];
+//            if (str != nil)
+//                [resultString appendFormat:@"%@", str];
+//        }
+//        [resultString appendString:@")"];
 
-        index += 3;
+//        index += 3;
 
-        NSScanner *scanner = [[NSScanner alloc] initWithString:methodName];
-        while ([scanner isAtEnd] == NO) {
-            NSString *str;
+//        NSScanner *scanner = [[NSScanner alloc] initWithString:methodName];
+//        while ([scanner isAtEnd] == NO) {
+//            NSString *str;
+//
+//            // We can have unnamed paramenters, :::
+//            if ([scanner scanUpToString:@":" intoString:&str]) {
+//                //NSLog(@"str += '%@'", str);
+//                [resultString appendString:str];
+//            }
+//            if ([scanner scanString:@":" intoString:NULL]) {
+//                [resultString appendString:@":"];
+//                if (index >= count) {
+//                    noMoreTypes = YES;
+//                } else {
+//                    methodType = methodTypes[index];
+//                    specialCase = [self _specialCaseVariable:nil type:methodType.type.bareTypeString];
+//                    if (specialCase != nil) {
+//                        [resultString appendFormat:@"(%@)", specialCase];
+//                    } else {
+//                        NSString *formattedType = [methodType.type formattedString:nil formatter:self level:0];
+//                        //if ([[methodType type] isIDType] == NO)
+//                        [resultString appendFormat:@"(%@)", formattedType];
+//                    }
+//                    //[resultString appendFormat:@"fp%@", [methodType offset]];
+//                    [resultString appendFormat:@"arg%lu", index-2];
+//
+//                    NSString *ch = [scanner peekCharacter];
+//                    // if next character is not ':' nor EOS then add space
+//                    if (ch != nil && [ch isEqual:@":"] == NO)
+//                        [resultString appendString:@" "];
+//                    index++;
+//                }
+//            }
+//        }
+        
+        [resultString appendString:methodName];
 
-            // We can have unnamed paramenters, :::
-            if ([scanner scanUpToString:@":" intoString:&str]) {
-                //NSLog(@"str += '%@'", str);
-                [resultString appendString:str];
-            }
-            if ([scanner scanString:@":" intoString:NULL]) {
-                [resultString appendString:@":"];
-                if (index >= count) {
-                    noMoreTypes = YES;
-                } else {
-                    methodType = methodTypes[index];
-                    specialCase = [self _specialCaseVariable:nil type:methodType.type.bareTypeString];
-                    if (specialCase != nil) {
-                        [resultString appendFormat:@"(%@)", specialCase];
-                    } else {
-                        NSString *formattedType = [methodType.type formattedString:nil formatter:self level:0];
-                        //if ([[methodType type] isIDType] == NO)
-                        [resultString appendFormat:@"(%@)", formattedType];
-                    }
-                    //[resultString appendFormat:@"fp%@", [methodType offset]];
-                    [resultString appendFormat:@"arg%lu", index-2];
-
-                    NSString *ch = [scanner peekCharacter];
-                    // if next character is not ':' nor EOS then add space
-                    if (ch != nil && [ch isEqual:@":"] == NO)
-                        [resultString appendString:@" "];
-                    index++;
-                }
-            }
-        }
-
-        if (noMoreTypes) {
-            [resultString appendString:@" /* Error: Ran out of types for this method. */"];
-        }
+#warning fix this
+//        if (0) {
+//            [resultString appendString:@" /* Error: Ran out of types for this method. */"];
+//        }
     }
 
     return resultString;

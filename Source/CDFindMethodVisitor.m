@@ -116,7 +116,7 @@
         [self.resultString appendString:@"\n"];
 }
 
-- (void)visitClassMethod:(CDOCMethod *)method;
+- (void)visitClassMethod:(CDOCMethod *)method className:(NSString *)className;
 {
     NSRange range = [method.name rangeOfString:self.searchString];
     if (range.length > 0) {
@@ -128,7 +128,7 @@
     }
 }
 
-- (void)visitInstanceMethod:(CDOCMethod *)method propertyState:(CDVisitorPropertyState *)propertyState;
+- (void)visitInstanceMethod:(CDOCMethod *)method propertyState:(CDVisitorPropertyState *)propertyState className:(NSString *)className;
 {
     NSRange range = [method.name rangeOfString:self.searchString];
     if (range.length > 0) {

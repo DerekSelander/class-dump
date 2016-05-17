@@ -113,11 +113,11 @@
 {
 }
 
-- (void)visitClassMethod:(CDOCMethod *)method;
+- (void)visitClassMethod:(CDOCMethod *)method className:(NSString *)className;
 {
 }
 
-- (void)visitInstanceMethod:(CDOCMethod *)method propertyState:(CDVisitorPropertyState *)propertyState;
+- (void)visitInstanceMethod:(CDOCMethod *)method propertyState:(CDVisitorPropertyState *)propertyState className:(NSString *)className;
 {
 }
 
