@@ -75,19 +75,19 @@ static BOOL debug = NO;
 
 - (void)willVisitCategory:(CDOCCategory *)category;
 {
-    [self.resultString appendFormat:@"@interface %@ (%@)", category.className, category.name];
-
-    NSArray *protocols = category.protocols;
-    if ([protocols count] > 0) {
-        [self.resultString appendFormat:@" <%@>", category.protocolsString];
-    }
-
-    [self.resultString appendString:@"\n"];
+//    [self.resultString appendFormat:@"@interface %@ (%@)", category.className, category.name];
+//
+//    NSArray *protocols = category.protocols;
+//    if ([protocols count] > 0) {
+//        [self.resultString appendFormat:@" <%@>", category.protocolsString];
+//    }
+//
+//    [self.resultString appendString:@"\n"];
 }
 
 - (void)didVisitCategory:(CDOCCategory *)category;
 {
-    [self.resultString appendString:@"@end\n\n"];
+//    [self.resultString appendString:@"@end\n\n"];
 }
 
 - (void)willVisitProtocol:(CDOCProtocol *)protocol;
@@ -207,12 +207,12 @@ static BOOL debug = NO;
 - (void)visitRemainingProperties:(CDVisitorPropertyState *)propertyState;
 {
     NSArray *remaining = propertyState.remainingProperties;
-
+#warning remaining properties logic here
     if ([remaining count] > 0) {
         [self.resultString appendString:@"\n"];
         [self.resultString appendFormat:@"// Remaining properties\n"];
-        //NSLog(@"Warning: remaining undeclared property count: %u", [remaining count]);
-        //NSLog(@"remaining: %@", remaining);
+        NSLog(@"Warning: remaining undeclared property count: %u", [remaining count]);
+        NSLog(@"remaining: %@", remaining);
         for (CDOCProperty *property in remaining)
             [self visitProperty:property];
     }
@@ -275,6 +275,7 @@ static BOOL debug = NO;
         }
     }
     
+//    return;
     if ([alist count] > 0) {
         [self.resultString appendFormat:@"@property(%@) ", [alist componentsJoinedByString:@", "]];
     } else {

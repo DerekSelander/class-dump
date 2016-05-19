@@ -40,6 +40,40 @@
     return resultString;
 }
 
+-(void)visitMethods:(CDVisitor *)visitor propertyState:(CDVisitorPropertyState *)propertyState
+{
+    NSString *categoryClassName = [NSString stringWithFormat:@"%@(%@)", self.className, self.name];
+    NSArray *methods = self.classMethods;
+    if (visitor.classDump.shouldSortMethods)
+        methods = [methods sortedArrayUsingSelector:@selector(ascendingCompareByName:)];
+    for (CDOCMethod *method in methods)
+        [visitor visitClassMethod:method className:categoryClassName];
+    
+    methods = self.instanceMethods;
+    if (visitor.classDump.shouldSortMethods)
+        methods = [methods sortedArrayUsingSelector:@selector(ascendingCompareByName:)];
+    for (CDOCMethod *method in methods)
+        [visitor visitInstanceMethod:method propertyState:propertyState className:categoryClassName];
+    
+    if ([self.optionalClassMethods count] > 0 || [self.optionalInstanceMethods count] > 0) {
+        [visitor willVisitOptionalMethods];
+        
+        methods = self.optionalClassMethods;
+        if (visitor.classDump.shouldSortMethods)
+            methods = [methods sortedArrayUsingSelector:@selector(ascendingCompareByName:)];
+        for (CDOCMethod *method in methods)
+            [visitor visitClassMethod:method className:self.name];
+        
+        methods = self.optionalInstanceMethods;
+        if (visitor.classDump.shouldSortMethods)
+            methods = [methods sortedArrayUsingSelector:@selector(ascendingCompareByName:)];
+        for (CDOCMethod *method in methods)
+            [visitor visitInstanceMethod:method propertyState:propertyState className:categoryClassName];
+        
+        [visitor didVisitOptionalMethods];
+    }
+}
+
 - (void)recursivelyVisit:(CDVisitor *)visitor;
 {
     if ([visitor.classDump shouldShowName:self.name]) {
